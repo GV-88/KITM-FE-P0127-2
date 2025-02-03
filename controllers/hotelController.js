@@ -1,9 +1,10 @@
 const fs = require("fs");
+const Hotel = require("./../models/hotelModel");
 
 const hotels = JSON.parse(fs.readFileSync(`${__dirname}/../data/hotels.json`));
 
-//middlewares
-
+//middlewares (no longer needed when using mongoose)
+/*
 exports.checkID = (req, res, next, val) => {
 	console.log(`Hotel id is: ${val}`);
 
@@ -25,59 +26,89 @@ exports.checkBody = (req, res, next) => {
 	}
 	next();
 };
-
+*/
 //req --> next() --> next() --> res
 
 //get all hotels
-exports.getAllHotels = (req, res) => {
-	res.status(200).json({
-		status: "success",
-		requestedAt: req.requestTime,
-		results: hotels.length,
-		data: {
-			hotels,
-		},
-	});
+exports.getAllHotels = async (req, res) => {
+	try {
+		const hotels = await Hotel.find();
+		res.status(200).json({
+			status: "success",
+			results: hotels.length,
+			data: { hotels },
+		});
+	} catch (err) {
+		res.status(404).json({
+			status: "fail",
+			message: err,
+		});
+	}
 };
 
 //get hotel
-exports.getHotel = (req, res) => {
-	// console.log("getHotel");
-	const id = req.params.id * 1;
-	const hotel = hotels.find((hotel) => hotel.id === id);
-	res.status(200).json({
-		status: "success",
-		data: { hotel },
-	});
+exports.getHotel = async (req, res) => {
+	try {
+		const hotel = await Hotel.findById(req.params.id);
+		res.status(200).json({
+			status: "success",
+			data: { hotel },
+		});
+	} catch (err) {
+		res.status(404).json({
+			status: "fail",
+			message: err,
+		});
+	}
 };
 
 //create hotel
-exports.createHotel = (req, res) => {
-	const newId = hotels[hotels.length - 1].id + 1;
-	const newHotel = Object.assign({ id: newId }, req.body);
-
-	hotels.push(newHotel);
-
-	// not the best solution for file path here
-	fs.writeFile(`${__dirname}/../data/hotels.json`, JSON.stringify(hotels), (err) => {
-		console.error(err);
+exports.createHotel = async (req, res) => {
+	try {
+		const newHotel = await Hotel.create(req.body);
 		res.status(201).json({
 			status: "success",
-			data: { newHotel },
+			data: newHotel,
 		});
-	});
+	} catch (err) {
+		res.status(400).json({
+			status: "fail",
+			message: err,
+		});
+	}
 };
 
 //update hotel
-exports.updateHotel = (req, res) => {
-	res.status(200).json({
-		status: "success",
-	});
+exports.updateHotel = async (req, res) => {
+	try {
+		const hotel = await Hotel.findByIdAndUpdate(req.params.id, req.body, {
+			new: true,
+			runValidators: true,
+		});
+		res.status(200).json({
+			status: "success",
+			data: { hotel },
+		});
+	} catch (err) {
+		res.status(400).json({
+			status: "fail",
+			message: err,
+		});
+	}
 };
 
 //delete hotel
-exports.deleteHotel = (req, res) => {
-	res.status(204).json({
-		status: "success",
-	});
+exports.deleteHotel = async (req, res) => {
+	try {
+		await Hotel.findByIdAndDelete(req.params.id);
+		res.status(204).json({
+			status: "success",
+			data: null,
+		});
+	} catch (err) {
+		res.status(400).json({
+			status: "fail",
+			message: err,
+		});
+	}
 };

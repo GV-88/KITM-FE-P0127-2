@@ -2,7 +2,11 @@ GET http://localhost:8000/api/v1/hotels HTTP/1.1
 
 ###
 
-GET http://localhost:8000/api/v1/hotels/3 HTTP/1.1
+GET http://localhost:8000/api/v1/hotels/679b61b61153db8029745c94 HTTP/1.1
+
+###
+
+DELETE http://localhost:8000/api/v1/hotels/679b61cc1153db8029745c9a
 
 ###
 
@@ -10,6 +14,20 @@ POST http://localhost:8000/api/v1/hotels HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Hotel 061",
-    "address": "..."
+    "name": "Hotel 066",
+    "address": "...",
+    "room_price": 306,
+    "comfort": "4",
+    "summary": "...",
+    "image_cover": "https://dummyimage.com/320x240/999/ddd.jpg&text=[placeholder]"
+}
+
+###
+
+PATCH http://localhost:8000/api/v1/hotels/679b61a51153db8029745c92 HTTP/1.1
+content-type: application/json
+
+{
+    "room_price": "302",
+    "summary": "Description for Hotel 062..."
 }
