@@ -14,9 +14,24 @@ POST http://localhost:8000/api/v1/hotels HTTP/1.1
 content-type: application/json
 
 {
-    "name": "Hotel 066",
+    "name": "Hotel 067",
     "address": "...",
-    "room_price": 306,
+    "room_price": 307,
+    "comfort": "4",
+    "summary": "...",
+    "image_cover": "https://dummyimage.com/320x240/999/ddd.jpg&text=[placeholder]"
+}
+
+###
+
+POST http://localhost:8000/api/v1/hotels HTTP/1.1
+content-type: application/json
+Authorization: token: ...
+
+{
+    "name": "Hotel 068",
+    "address": "...",
+    "room_price": 308,
     "comfort": "4",
     "summary": "...",
     "image_cover": "https://dummyimage.com/320x240/999/ddd.jpg&text=[placeholder]"
@@ -30,4 +45,38 @@ content-type: application/json
 {
     "room_price": "302",
     "summary": "Description for Hotel 062..."
+}
+
+###
+
+POST http://localhost:8000/api/v1/users/signup HTTP/1.1
+content-type: application/json
+
+{
+    "name": "user1",
+    "email": "user1@mail.com",
+    "password": "helloworld",
+    "passwordConfirm": "helloworld"
+}
+
+###
+
+POST http://localhost:8000/api/v1/users/login HTTP/1.1
+content-type: application/json
+
+{
+    "name": "user1",
+    "email": "user1@mail.com",
+    "password": "hello?"
+}
+
+###
+
+POST http://localhost:8000/api/v1/users/login HTTP/1.1
+content-type: application/json
+
+{
+    "name": "user1",
+    "email": "user1@mail.com",
+    "password": "helloworld"
 }
