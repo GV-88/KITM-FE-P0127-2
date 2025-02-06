@@ -26,7 +26,6 @@ content-type: application/json
 
 POST http://localhost:8000/api/v1/hotels HTTP/1.1
 content-type: application/json
-Authorization: token: ...
 
 {
     "name": "Hotel 068",
@@ -41,6 +40,7 @@ Authorization: token: ...
 
 PATCH http://localhost:8000/api/v1/hotels/679b61a51153db8029745c92 HTTP/1.1
 content-type: application/json
+authorization: Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTA3NTgzNjhkZjgyZDAyMDNkMmFkNiIsImlhdCI6MTczODgzMDU2MywiZXhwIjoxNzM4ODMwODYzfQ.feFFvfPS7geY-zKL1512if0PU_XhZg_T4-PKhbPIDj0
 
 {
     "room_price": "302",
