@@ -1,3 +1,4 @@
+
 GET http://localhost:8000/api/v1/hotels HTTP/1.1
 
 ###
@@ -12,39 +13,19 @@ DELETE http://localhost:8000/api/v1/hotels/679b61cc1153db8029745c9a
 
 POST http://localhost:8000/api/v1/hotels HTTP/1.1
 content-type: application/json
+Authorization: Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTA3NTgzNjhkZjgyZDAyMDNkMmFkNiIsImlhdCI6MTczOTE0NTA3NywiZXhwIjoxNzM5MTQ1Mzc3fQ.xTZ9HyuH50yFlm6s5euUxRQywYmcjs0yUujFbUt50Gk
 
-{
-    "name": "Hotel 067",
-    "address": "...",
-    "room_price": 307,
-    "comfort": "4",
-    "summary": "...",
-    "image_cover": "https://dummyimage.com/320x240/999/ddd.jpg&text=[placeholder]"
-}
+{"name": "First Hotel", "address": "Primum 1", "room_price": 401, "comfort": "5",  "summary": "Sed felis neque, feugiat ac tellus id, consequat viverra ipsum. Nam feugiat.", "image_cover": "https://dummyimage.com/320x192/999/ddd.jpg&text=[placeholder]+1"}
 
 ###
 
-POST http://localhost:8000/api/v1/hotels HTTP/1.1
+PATCH http://localhost:8000/api/v1/hotels/67a93fce31261fc15ae4a513 HTTP/1.1
 content-type: application/json
+Authorization: Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTA3NTgzNjhkZjgyZDAyMDNkMmFkNiIsImlhdCI6MTczOTE0NTA3NywiZXhwIjoxNzM5MTQ1Mzc3fQ.xTZ9HyuH50yFlm6s5euUxRQywYmcjs0yUujFbUt50Gk
 
 {
-    "name": "Hotel 068",
-    "address": "...",
-    "room_price": 308,
-    "comfort": "4",
-    "summary": "...",
-    "image_cover": "https://dummyimage.com/320x240/999/ddd.jpg&text=[placeholder]"
-}
-
-###
-
-PATCH http://localhost:8000/api/v1/hotels/679b61a51153db8029745c92 HTTP/1.1
-content-type: application/json
-authorization: Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTA3NTgzNjhkZjgyZDAyMDNkMmFkNiIsImlhdCI6MTczODgzMDU2MywiZXhwIjoxNzM4ODMwODYzfQ.feFFvfPS7geY-zKL1512if0PU_XhZg_T4-PKhbPIDj0
-
-{
-    "room_price": "302",
-    "summary": "Description for Hotel 062..."
+    "room_price": "322",
+    "summary": "Description for second Second Hotel..."
 }
 
 ###
@@ -80,3 +61,35 @@ content-type: application/json
     "email": "user1@mail.com",
     "password": "helloworld"
 }
+
+###
+
+GET http://localhost:8000/api/v1/reviews?hotelId=67a93fe331261fc15ae4a516 HTTP/1.1
+
+###
+
+GET http://localhost:8000/api/v1/hotels/67a93fe331261fc15ae4a516/reviews HTTP/1.1
+
+###
+
+POST http://localhost:8000/api/v1/reviews HTTP/1.1
+content-type: application/json
+Authorization: Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YTA3NTgzNjhkZjgyZDAyMDNkMmFkNiIsImlhdCI6MTczOTE0NTg2NywiZXhwIjoxNzM5MTQ2MTY3fQ.XIBWjgbARHGr6TZ4_pbAesY1rmnjLJAbkBro_pEnldE
+
+{"review": "I am user1 and I give 4 stars to Second Hotel", "rating": 4, "hotel": "67a93fb731261fc15ae4a510"}
+
+###
+
+GET http://localhost:8000/api/v1/hotels?room_price[lt]=400 HTTP/1.1
+
+###
+
+GET http://localhost:8000/api/v1/hotels?sort=name HTTP/1.1
+
+###
+
+GET http://localhost:8000/api/v1/hotels?fields=name HTTP/1.1
+
+###
+
+GET http://localhost:8000/api/v1/hotels?limit=3&page=2 HTTP/1.1

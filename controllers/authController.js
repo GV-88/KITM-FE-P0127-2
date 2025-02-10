@@ -75,8 +75,14 @@ exports.protect = async (req, res, next) => {
 		}
 
 		//2. Verify token
+		/*
+        from jsonwebtoken package doc:
+        "If a callback is supplied, function acts asynchronously"
+        */
 		const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
 		console.log(decoded);
+		//alternatively:
+		// jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => { all the logic here })
 
 		//3. Check user in DB
 		const currentUser = await User.findById(decoded.id);

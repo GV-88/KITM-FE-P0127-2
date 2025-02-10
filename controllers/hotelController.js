@@ -1,7 +1,8 @@
 const fs = require("fs");
 const Hotel = require("./../models/hotelModel");
+const APIFeatures = require("../utilities/apiTools");
 
-const hotels = JSON.parse(fs.readFileSync(`${__dirname}/../data/hotels.json`));
+// const hotels = JSON.parse(fs.readFileSync(`${__dirname}/../data/hotels.json`));
 
 //middlewares (no longer needed when using mongoose)
 /*
@@ -32,7 +33,9 @@ exports.checkBody = (req, res, next) => {
 //get all hotels
 exports.getAllHotels = async (req, res) => {
 	try {
-		const hotels = await Hotel.find();
+		// const hotels = await Hotel.find();
+		const hotelsData = new APIFeatures(Hotel.find(), req.query).filter().sort().paginate().limitFields();
+		const hotels = await hotelsData.query;
 		res.status(200).json({
 			status: "success",
 			results: hotels.length,
